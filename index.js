@@ -4,18 +4,29 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-mongoose.connect('mongodb+srv://rizkianakbar:rizkian12345@rizkianakbar.stito.mongodb.net/<dbname>?retryWrites=true&w=majority',
+const config = require('./config/key');
+
+const { User } = require('./model/user');
+
+mongoose.connect(config.mongoURI,
         {useNewUrlParser: true }).then(() => console.log('DB Connected'))
                                  .catch(err => console.error(err));
 
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-asdasd
 
+app.post('/api/users/register', (req, res) => {
+    const user = new User(req.body)
+
+    user.save((err, userData) => {
+        if (err) return res.json ({success: false, err});
+    });
+    return res.status(200);
+})
                                  
 app.get('/', (req, res) => {
-    res.send('hello world')
+    res.send('hello wdorld')
 });
 
 app.listen(5000);
