@@ -8,9 +8,13 @@ const { User } = require('./models/user');
 const { auth } = require('./middleware/auth');
 
 mongoose.connect(config.mongoURI,
-        {useNewUrlParser: true, useUnifiedTopology: true})
-            .then(() => console.log('DB Connected'))
-            .catch(err => console.error(err));
+        {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+            useCreateIndex: true
+        }).then(() => console.log('DB Connected'))
+          .catch(err => console.error(err));
 
 app.use(bodyParser.urlencoded({
     extended : true 
